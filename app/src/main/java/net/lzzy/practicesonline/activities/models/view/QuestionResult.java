@@ -29,6 +29,7 @@ public class QuestionResult implements Parcelable {
         dest.writeByte((byte) (isRight ? 1 : 0));
         dest.writeSerializable(questionId);
         dest.writeInt(type.ordinal());
+
     }
 
     @Override
