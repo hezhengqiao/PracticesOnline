@@ -46,6 +46,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import static net.lzzy.practicesonline.activities.activities.ResultActivity.*;
+
 /**
  * @author Administrator
  */
@@ -66,8 +68,8 @@ public class QuestionActivity extends AppCompatActivity {
     private LinearLayout container;
     private View[] dost;
     private DownloadHandler handler= new DownloadHandler(this);
-    private static final String EXTRA_PRACTICE_ID= "practiceId";
-    private static final String EXTRA_RESULTS= "results";
+    public static final String EXTRA_PRACTICE_ID= "practiceId";
+    public static final String EXTRA_RESULTS= "results";
 
     /**
      * 自定义线程 返回数据的方法
@@ -150,6 +152,11 @@ public class QuestionActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==EXTRA_REQUEST_CODE&&resultCode== RESULT_CODE){
+            int position=data.getIntExtra(POSITION,-1);
+            pager.setCurrentItem(position);
+        }
+
     }
 
     String info;

@@ -25,6 +25,7 @@
         </activity>
         <activity android:name=".activities.activities.PracticesActivity" />
         <service android:name=".activities.network.DetectWebService"/>
+        <activity android:name=".activities.activities.ResultActivity"/>
     </application>
 
 </manifest>

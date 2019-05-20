@@ -125,7 +125,7 @@ public class UserCookies {
         String ids=spOption.getString(option.getQuestionId().toString(),"");
         return Objects.requireNonNull(ids).contains(option.getId().toString());
     }
-
+    /**保存答案*/
     public List<QuestionResult> getResultFromCoolies(List<Question> questions){
         List<QuestionResult> results=new ArrayList<>();
         for (Question question:questions){
