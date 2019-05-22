@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -170,7 +171,9 @@ public class QuestionActivity extends AppCompatActivity {
                         questionList.add(q);
                     }
                 }
+                //清空
                 questions.clear();
+                //重新加载
                 questions.addAll(questionList);
                 initDots();
                 adapter.notifyDataSetChanged();
@@ -266,6 +269,7 @@ public class QuestionActivity extends AppCompatActivity {
             tvHint.setVisibility(View.GONE);
         }
         adapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+            int count=0;
             @Override
             public Fragment getItem(int position) {
                 Question question=questions.get(position);
@@ -275,6 +279,21 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public int getCount() {
                 return questions.size();
+            }
+
+            @Override
+            public void notifyDataSetChanged() {
+                count=getCount();
+                super.notifyDataSetChanged();
+            }
+
+            @Override
+            public int getItemPosition(@NonNull Object object) {
+                if (count>0){
+                    count--;
+                    return POSITION_NONE;
+                }
+                return super.getItemPosition(object);
             }
         };
         pager.setAdapter(adapter);

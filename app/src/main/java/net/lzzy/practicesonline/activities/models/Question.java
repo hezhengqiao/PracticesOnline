@@ -29,6 +29,7 @@ public class Question extends BaseEntity implements Sqlitable, Jsonable {
     private int dbType;
     private String analysis;
     private UUID practiceId;
+    private int number;
     @Ignored
     private List<Option> options;
 
@@ -82,6 +83,14 @@ public class Question extends BaseEntity implements Sqlitable, Jsonable {
         this.options.addAll(options);
     }
 
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
     @Override
     public boolean needUpdate() {
         return false;
@@ -108,5 +117,6 @@ public class Question extends BaseEntity implements Sqlitable, Jsonable {
         }catch (IllegalAccessException|InstantiationException e){
             e.printStackTrace();
         }
+        number=json.getInt("Number");
     }
 }

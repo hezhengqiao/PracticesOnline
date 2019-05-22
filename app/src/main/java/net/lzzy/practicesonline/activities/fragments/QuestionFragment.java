@@ -133,8 +133,8 @@ public class QuestionFragment extends BaseFragment {
     }
     /**显示题目类型与收藏标志*/
     private void displayOption() {
-        int label=pos+1;
-        String qType=label+"."+question.getType().toString();
+        //int label=pos+1;
+        String qType=question.getNumber()+"."+question.getType().toString();
         tvType.setText(qType);
         int starId= FavoriteFactory.getInstance().isQuestionStarred(question.getId().toString())?
                 android.R.drawable.star_on : android.R.drawable.star_off;
