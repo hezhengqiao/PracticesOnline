@@ -1,7 +1,10 @@
 package net.lzzy.practicesonline.activities.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import net.lzzy.practicesonline.R;
@@ -9,6 +12,7 @@ import net.lzzy.practicesonline.activities.fragments.BarChartFragment;
 import net.lzzy.practicesonline.activities.fragments.ChartFragment;
 import net.lzzy.practicesonline.activities.fragments.GridFragment;
 import net.lzzy.practicesonline.activities.models.view.QuestionResult;
+import net.lzzy.practicesonline.activities.utils.AppUtils;
 
 import java.util.List;
 
@@ -23,7 +27,16 @@ GridFragment.GetChartFragmentListener,ChartFragment.GetGridFragmentListener {
 
     public static final String POSITION = "position";
     public static final int RESULT_CODE = 1;
+    public static final String QUESTION = "question";
+    public static final int RESULT_CODE_TWO = 2;
     private List<QuestionResult> results;
+    private String question;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        question=getIntent().getStringExtra(QuestionActivity.EXTRA_PRACTICE_ID);
+    }
 
     @Override
     protected int getLayoutRes() {
@@ -59,5 +72,38 @@ GridFragment.GetChartFragmentListener,ChartFragment.GetGridFragmentListener {
     public void getGridFragment() {
         getManager().beginTransaction().replace(R.id.activity_result_container,
                 GridFragment.newInstance(results)).commit();
+    }
+    /**返回*/
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setMessage("返回到哪里？")
+                .setNeutralButton("返回题目", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent=new Intent(ResultActivity.this,QuestionActivity.class);
+                        startActivity(intent);
+                        finish();
+
+                    }
+                })
+                .setNegativeButton("章节列表", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent=new Intent(ResultActivity.this,PracticesActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setPositiveButton("查看收藏", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent=new Intent();
+                        intent.putExtra(QUESTION,question);
+                        setResult(RESULT_CODE_TWO,intent);
+                        finish();
+                    }
+                })
+                .show();
     }
 }
